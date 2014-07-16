@@ -1,0 +1,25 @@
+{
+  "name": "me-lazyload",
+  "main": "me-lazyload.js",
+  "version": "0.0.1",
+  "homepage": "https://github.com/jeremial/me-lazyload",
+  "authors": [
+    "Jeremial <jeremial90@gmail.com>"
+  ],
+  "description": "image lazyload directive for angular",
+  "keywords": [
+    "angular",
+    "lazyload"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.20"
+  }
+}

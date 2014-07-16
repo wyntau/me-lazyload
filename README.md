@@ -3,7 +3,7 @@ Images lazyload directive for angular.
 
 ### Usage
 1. include me-lazyload.js as dependence.
-2. instead `src` with `src`.
+2. instead `src` with `lazyload`.
 
         <img lazyload="{{imgUrl}}" alt="">
 

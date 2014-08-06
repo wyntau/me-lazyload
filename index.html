@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>me-lazyload</title>
-    <link rel="stylesheet" href="me-lazyload.css">
     <style>
         .title{
             text-align: center;
@@ -30,7 +29,7 @@
     <h2 class="title">me-lazyload</h2>
     <div class="container">
         <div class="wrap" ng-repeat="img in images">
-            <img lazyload="{{img}}" alt="">
+            <img lazy-src="{{img}}" alt="">
         </div>
     </div>
 

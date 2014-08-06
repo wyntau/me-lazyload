@@ -1,12 +1,11 @@
 angular.module('me-lazyload', [])
-.directive('lazyload', ['$window', '$document', function($window, $document){
+.directive('lazySrc', ['$window', '$document', function($window, $document){
     var doc = $document[0],
         body = doc.body,
         win = $window,
         $win = angular.element(win),
         uid = 0,
         elements = {};
-
 
     function getUid(el){
         return el.__uid || (el.__uid = '' + ++uid);
@@ -86,16 +85,17 @@ angular.module('me-lazyload', [])
             delete elements[uid];
         }
 
-        if(Object.keys(elements).length === 0){
-            $win.unbind('scroll');
-            $win.unbind('resize');
-        }
+        // comment this, for images added later by angular
+        // if(Object.keys(elements).length === 0){
+        //     $win.unbind('scroll');
+        //     $win.unbind('resize');
+        // }
     }
 
     return {
         restrict: 'A',
         scope: {
-            lazySrc: '@lazyload'
+            lazySrc: '@'
         },
         link: function($scope, iElement, iAttributes){
 

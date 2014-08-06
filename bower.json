@@ -1,7 +1,7 @@
 {
   "name": "me-lazyload",
   "main": "me-lazyload.js",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "https://github.com/jeremial/me-lazyload",
   "authors": [
     "Jeremial <jeremial90@gmail.com>"

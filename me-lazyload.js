@@ -77,19 +77,11 @@ angular.module('me-lazyload', [])
         var $el = angular.element(this),
             uid = getUid($el);
 
-        $el.unbind('load');
         $el.css('opacity', 1);
-        $el.__loaded = true;
 
         if(elements.hasOwnProperty(uid)){
             delete elements[uid];
         }
-
-        // comment this, for images added later by angular
-        // if(Object.keys(elements).length === 0){
-        //     $win.unbind('scroll');
-        //     $win.unbind('resize');
-        // }
     }
 
     return {
@@ -97,12 +89,12 @@ angular.module('me-lazyload', [])
         scope: {
             lazySrc: '@'
         },
-        link: function($scope, iElement, iAttributes){
+        link: function($scope, iElement){
 
             iElement.bind('load', onLoad);
 
             $scope.$watch('lazySrc', function(){
-                if(iElement.__isloaded || isVisible(iElement)){
+                if(isVisible(iElement)){
                     iElement.attr('src', $scope.lazySrc);
                 }else{
                     var uid = getUid(iElement);

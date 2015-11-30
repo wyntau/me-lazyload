@@ -113,6 +113,10 @@ angular.module('me-lazyload', [])
 
             $scope.$on('$destroy', function(){
                 iElement.unbind('load');
+                var uid = getUid(iElement);
+                if(elements.hasOwnProperty(uid)){
+                    delete elements[uid];
+                }
             });
         }
     };

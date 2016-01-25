@@ -8,7 +8,11 @@ angular.module('me-lazyload', [])
         elements = {};
 
     function getUid(el){
-        return el.__uid || (el.__uid = '' + ++uid);
+        var __uid = el.data("__uid");
+        if (! __uid) {
+            el.data("__uid", (__uid = '' + ++uid));
+        }
+        return __uid;
     }
 
     function getWindowOffset(){

@@ -91,22 +91,36 @@ angular.module('me-lazyload', [])
     return {
         restrict: 'A',
         scope: {
-            lazySrc: '@'
+            lazySrc: '@',
+            animateVisible: '@',
+            animateSpeed: '@'
         },
         link: function($scope, iElement){
 
             iElement.bind('load', onLoad);
 
             $scope.$watch('lazySrc', function(){
+                var speed = "1s";
+                if ($scope.animateSpeed != null) {
+                    speed = $scope.animateSpeed;
+                }
                 if(isVisible(iElement)){
+                    if ($scope.animateVisible) {
+                        iElement.css({
+                            'background-color': '#fff',
+                            'opacity': 0,
+                            '-webkit-transition': 'opacity ' + speed,
+                            'transition': 'opacity ' + speed
+                        });
+                    }
                     iElement.attr('src', $scope.lazySrc);
                 }else{
                     var uid = getUid(iElement);
                     iElement.css({
                         'background-color': '#fff',
                         'opacity': 0,
-                        '-webkit-transition': 'opacity 1s',
-                        'transition': 'opacity 1s'
+                        '-webkit-transition': 'opacity ' + speed,
+                        'transition': 'opacity ' + speed
                     });
                     elements[uid] = {
                         iElement: iElement,

@@ -1,6 +1,6 @@
 {
   "name": "me-lazyload",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "image lazyload directive for angular",
   "main": "me-lazyload.js",
   "scripts": {

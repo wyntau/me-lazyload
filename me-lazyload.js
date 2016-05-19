@@ -74,7 +74,7 @@ angular.module('me-lazyload', [])
         });
     }
 
-    $win.bind('scroll', checkImage);
+    //$win.bind('scroll', checkImage);
     $win.bind('resize', checkImage);
 
     function onLoad(){
@@ -91,6 +91,7 @@ angular.module('me-lazyload', [])
     return {
         restrict: 'A',
         scope: {
+            scrollContainer:'@',
             lazySrc: '@',
             animateVisible: '@',
             animateSpeed: '@'
@@ -98,6 +99,18 @@ angular.module('me-lazyload', [])
         link: function($scope, iElement){
 
             iElement.bind('load', onLoad);
+
+            var $scrollContainer = $win
+            $scrollContainer.on('scroll', checkImage);
+
+
+            $scope.$watch('scrollContainer', function(){
+                $scrollContainer.off('scroll', checkImage);
+
+                $scrollContainer = angular.element(document).find($scope.scrollContainer);
+                $scrollContainer.on('scroll', checkImage);
+            });
+
 
             $scope.$watch('lazySrc', function(){
                 var speed = "1s";

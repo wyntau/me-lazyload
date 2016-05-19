@@ -104,11 +104,12 @@ angular.module('me-lazyload', [])
             $scrollContainer.on('scroll', checkImage);
 
 
-            $scope.$watch('scrollContainer', function(){
-                $scrollContainer.off('scroll', checkImage);
-
-                $scrollContainer = angular.element(document).find($scope.scrollContainer);
-                $scrollContainer.on('scroll', checkImage);
+            $scope.$watch('scrollContainer', function(newVal){
+                if(newVal){
+                    $scrollContainer.off('scroll', checkImage);
+                    $scrollContainer = angular.element(document).find($scope.scrollContainer);
+                    $scrollContainer.on('scroll', checkImage);
+                }
             });
 
 

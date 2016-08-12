@@ -17,8 +17,8 @@ angular.module('me-lazyload', [])
 
     function getWindowOffset(){
         var t,
-            pageXOffset = (typeof win.pageXOffset == 'number') ? win.pageXOffset : (((t = doc.documentElement) || (t = body.parentNode)) && typeof t.ScrollLeft == 'number' ? t : body).ScrollLeft,
-            pageYOffset = (typeof win.pageYOffset == 'number') ? win.pageYOffset : (((t = doc.documentElement) || (t = body.parentNode)) && typeof t.ScrollTop == 'number' ? t : body).ScrollTop;
+            pageXOffset = (typeof win.pageXOffset == 'number') ? win.pageXOffset : (((t = doc.documentElement) || (t = body.parentNode)) && typeof t.scrollLeft == 'number' ? t : body).scrollLeft,
+            pageYOffset = (typeof win.pageYOffset == 'number') ? win.pageYOffset : (((t = doc.documentElement) || (t = body.parentNode)) && typeof t.scrollTop == 'number' ? t : body).scrollTop;
         return {
             offsetX: pageXOffset,
             offsetY: pageYOffset
@@ -31,8 +31,8 @@ angular.module('me-lazyload', [])
             windowOffset = getWindowOffset(),
             winOffsetX = windowOffset.offsetX,
             winOffsetY = windowOffset.offsetY,
-            elemWidth = elemRect.width,
-            elemHeight = elemRect.height,
+            elemWidth = elemRect.width || elem.width,
+            elemHeight = elemRect.height || elem.height,
             elemOffsetX = elemRect.left + winOffsetX,
             elemOffsetY = elemRect.top + winOffsetY,
             viewWidth = Math.max(doc.documentElement.clientWidth, win.innerWidth || 0),
@@ -64,12 +64,11 @@ angular.module('me-lazyload', [])
     };
 
     function checkImage(){
-        Object.keys(elements).forEach(function(key){
-            var obj = elements[key],
-                iElement = obj.iElement,
+        angular.forEach(elements, function(obj, key) {
+            var iElement = obj.iElement,
                 $scope = obj.$scope;
             if(isVisible(iElement)){
-                iElement.attr('src', $scope.lazySrc);
+              iElement.attr('src', $scope.lazySrc);
             }
         });
     }
@@ -96,7 +95,6 @@ angular.module('me-lazyload', [])
             animateSpeed: '@'
         },
         link: function($scope, iElement){
-
             iElement.bind('load', onLoad);
 
             $scope.$watch('lazySrc', function(){

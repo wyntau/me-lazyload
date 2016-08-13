@@ -1,6 +1,6 @@
 {
   "name": "me-lazyload",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "description": "image lazyload directive for angular",
   "main": "me-lazyload.js",
   "scripts": {
@@ -8,16 +8,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jeremial/me-lazyload.git"
+    "url": "https://github.com/Treri/me-lazyload.git"
   },
   "keywords": [
     "angular",
     "lazyload"
   ],
-  "author": "Jeremial",
+  "author": "Treri",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jeremial/me-lazyload/issues"
+    "url": "https://github.com/Treri/me-lazyload/issues"
   },
-  "homepage": "https://github.com/jeremial/me-lazyload"
+  "homepage": "https://github.com/Treri/me-lazyload"
 }

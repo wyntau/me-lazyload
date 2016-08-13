@@ -8,13 +8,17 @@ angular.module('me-lazyload', [])
         elements = {};
 
     function getUid(el){
-        return el.__uid || (el.__uid = '' + ++uid);
+        var __uid = el.data("__uid");
+        if (! __uid) {
+            el.data("__uid", (__uid = '' + ++uid));
+        }
+        return __uid;
     }
 
     function getWindowOffset(){
         var t,
-            pageXOffset = (typeof win.pageXOffset == 'number') ? win.pageXOffset : (((t = doc.documentElement) || (t = body.parentNode)) && typeof t.ScrollLeft == 'number' ? t : body).ScrollLeft,
-            pageYOffset = (typeof win.pageYOffset == 'number') ? win.pageYOffset : (((t = doc.documentElement) || (t = body.parentNode)) && typeof t.ScrollTop == 'number' ? t : body).ScrollTop;
+            pageXOffset = (typeof win.pageXOffset == 'number') ? win.pageXOffset : (((t = doc.documentElement) || (t = body.parentNode)) && typeof t.scrollLeft == 'number' ? t : body).scrollLeft,
+            pageYOffset = (typeof win.pageYOffset == 'number') ? win.pageYOffset : (((t = doc.documentElement) || (t = body.parentNode)) && typeof t.scrollTop == 'number' ? t : body).scrollTop;
         return {
             offsetX: pageXOffset,
             offsetY: pageYOffset
@@ -27,8 +31,8 @@ angular.module('me-lazyload', [])
             windowOffset = getWindowOffset(),
             winOffsetX = windowOffset.offsetX,
             winOffsetY = windowOffset.offsetY,
-            elemWidth = elemRect.width,
-            elemHeight = elemRect.height,
+            elemWidth = elemRect.width || elem.width,
+            elemHeight = elemRect.height || elem.height,
             elemOffsetX = elemRect.left + winOffsetX,
             elemOffsetY = elemRect.top + winOffsetY,
             viewWidth = Math.max(doc.documentElement.clientWidth, win.innerWidth || 0),
@@ -60,12 +64,11 @@ angular.module('me-lazyload', [])
     };
 
     function checkImage(){
-        Object.keys(elements).forEach(function(key){
-            var obj = elements[key],
-                iElement = obj.iElement,
+        angular.forEach(elements, function(obj, key) {
+            var iElement = obj.iElement,
                 $scope = obj.$scope;
             if(isVisible(iElement)){
-                iElement.attr('src', $scope.lazySrc);
+              iElement.attr('src', $scope.lazySrc);
             }
         });
     }
@@ -87,22 +90,35 @@ angular.module('me-lazyload', [])
     return {
         restrict: 'A',
         scope: {
-            lazySrc: '@'
+            lazySrc: '@',
+            animateVisible: '@',
+            animateSpeed: '@'
         },
         link: function($scope, iElement){
-
             iElement.bind('load', onLoad);
 
             $scope.$watch('lazySrc', function(){
+                var speed = "1s";
+                if ($scope.animateSpeed != null) {
+                    speed = $scope.animateSpeed;
+                }
                 if(isVisible(iElement)){
+                    if ($scope.animateVisible) {
+                        iElement.css({
+                            'background-color': '#fff',
+                            'opacity': 0,
+                            '-webkit-transition': 'opacity ' + speed,
+                            'transition': 'opacity ' + speed
+                        });
+                    }
                     iElement.attr('src', $scope.lazySrc);
                 }else{
                     var uid = getUid(iElement);
                     iElement.css({
                         'background-color': '#fff',
                         'opacity': 0,
-                        '-webkit-transition': 'opacity 1s',
-                        'transition': 'opacity 1s'
+                        '-webkit-transition': 'opacity ' + speed,
+                        'transition': 'opacity ' + speed
                     });
                     elements[uid] = {
                         iElement: iElement,
@@ -113,6 +129,10 @@ angular.module('me-lazyload', [])
 
             $scope.$on('$destroy', function(){
                 iElement.unbind('load');
+                var uid = getUid(iElement);
+                if(elements.hasOwnProperty(uid)){
+                    delete elements[uid];
+                }
             });
         }
     };

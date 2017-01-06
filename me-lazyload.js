@@ -105,7 +105,6 @@ angular.module('me-lazyload', [])
                 if(isVisible(iElement)){
                     if ($scope.animateVisible) {
                         iElement.css({
-                            'background-color': '#fff',
                             'opacity': 0,
                             '-webkit-transition': 'opacity ' + speed,
                             'transition': 'opacity ' + speed
@@ -115,7 +114,6 @@ angular.module('me-lazyload', [])
                 }else{
                     var uid = getUid(iElement);
                     iElement.css({
-                        'background-color': '#fff',
                         'opacity': 0,
                         '-webkit-transition': 'opacity ' + speed,
                         'transition': 'opacity ' + speed

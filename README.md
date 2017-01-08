@@ -11,9 +11,13 @@ Demo Site: http://treri.github.io/me-lazyload
 
 2. instead `src` with `lazy-src`.
 
-        <img lazy-src="{{imgUrl}}" alt="" />
+        <img lazy-src="{{imgUrl}}" />
 
-3. All Done!
+3. set scroll container DOM selector with `scroll-container` (default is window).
+
+        <img lazy-src="{{imgUrl}}" scroll-container="#container" alt="" />
+
+4. All Done!
 
 ### Optional Parameters
 Additional parameters can be added, example:
